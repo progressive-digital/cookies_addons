@@ -1,0 +1,8 @@
+name: Cookies Addons Paragraphs
+type: module
+description: Allows to paragraph drupal paragraphs and loads them on consent.
+package: 'Cookies'
+core_version_requirement: ^9.2 || ^10
+dependencies:
+  - drupal:cookies
+  - drupal:paragraphs

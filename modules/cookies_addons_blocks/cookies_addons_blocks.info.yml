@@ -1,0 +1,7 @@
+name: Cookies Addons Blocks
+type: module
+description: Allows to block drupal blocks and loads them on consent.
+package: 'Cookies'
+core_version_requirement: ^9.2 || ^10
+dependencies:
+  - drupal:cookies

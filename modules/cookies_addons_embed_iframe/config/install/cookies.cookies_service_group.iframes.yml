@@ -1,0 +1,12 @@
+uuid: c9ff54e8-ff82-45ad-a09d-942f01a1ede6
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - cookies_addons_embed_iframe
+id: iframes
+label: Iframes
+weight: 50
+title: Iframes
+details: 'Content embedded by third-party providers in iframes such as Google Maps.'

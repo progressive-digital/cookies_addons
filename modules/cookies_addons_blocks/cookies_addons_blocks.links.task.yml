@@ -1,0 +1,5 @@
+cookies_addons_blocks.settings:
+  route_name: cookies_addons_blocks.settings
+  base_route: cookies.config
+  title: 'Cookies Addons Blocks'
+  weight: 40

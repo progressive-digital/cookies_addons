@@ -1,0 +1,8 @@
+name: Cookies Addons Views
+type: module
+description: Povides ability to restrict access to views based on user preferences.
+package: 'Cookies'
+core_version_requirement: ^9.2 || ^10
+dependencies:
+  - drupal:cookies
+  - drupal:views

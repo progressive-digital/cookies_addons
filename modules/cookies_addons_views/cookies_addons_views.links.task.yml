@@ -1,0 +1,5 @@
+cookies_addons_views.settings_form:
+  route_name: cookies_addons_views.settings_form
+  base_route: cookies.config
+  title: 'Cookies Addons Views'
+  weight: 30

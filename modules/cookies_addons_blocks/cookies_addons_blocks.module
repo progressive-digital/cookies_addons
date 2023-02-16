@@ -1,0 +1,81 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Cookies Addons Blocks module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+/**
+ * Implements template_preprocess_block().
+ */
+function cookies_addons_blocks_preprocess_block(&$variables) {
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+
+  if (isset($variables['elements']['#id']) && $id = $variables['elements']['#id']) {
+    if ($service = _cookies_addons_blocks_is_restricted($id)) {
+      $cookiesServices = $entityTypeManager
+        ->getStorage('cookies_service')
+        ->loadByProperties(['status' => 1]);
+      if(isset($cookiesServices[$service])) {
+        $serviceLabel = $cookiesServices[$service]->label();
+      }
+      else {
+        $serviceLabel = $service;
+      }
+      // Replace entire block with a placeholder.
+      $variables['content'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => 'cookies-addons-blocks-placeholder',
+          'data-cookies-service' => $service,
+          'data-service-name' => $serviceLabel,
+          'data-block-id' => $id,
+          'id' => $variables['elements']['#id'] . '-content',
+        ],
+        '#attached' => [
+          'library' => 'cookies_addons_blocks/cookies-addons-blocks',
+        ],
+      ];
+    }
+  }
+}
+
+/**
+ * Returns cookies service for restricted blocks.
+ *
+ * @param $block_id
+ *   Block ID.
+ *
+ * @return false|string
+ *   Returns cookies service name if applicable or FALSE.
+ */
+function _cookies_addons_blocks_is_restricted($block_id) {
+  if (\Drupal::request()->getMethod() === 'POST') {
+    return FALSE;
+  }
+
+  $restricted_blocks = \Drupal::config('cookies_addons_blocks.settings')
+    ->get('blocks');
+
+  if ($restricted_blocks) {
+    $restricted_blocks = preg_split('/\r\n|\r|\n/', $restricted_blocks);
+
+    foreach ($restricted_blocks as $restricted_block) {
+      $parts = explode('|', $restricted_block);
+      if (count($parts) !== 2) {
+        continue;
+      }
+
+      if ($block_id === $parts[0]) {
+        return $parts[1];
+      }
+    }
+  }
+
+  return FALSE;
+}

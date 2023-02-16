@@ -1,0 +1,6 @@
+cookies-addons-views:
+  js:
+    js/cookies-addons-views.js: {}
+  dependencies:
+    - cookies/cookies.lib
+    - core/drupal.ajax

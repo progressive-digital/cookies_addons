@@ -1,0 +1,21 @@
+{
+  "name": "progressive-digital/cookies_addons",
+  "description": "Provides additional features for the cookies module.",
+  "type": "drupal-module",
+  "license": "GPL-3.0-or-later",
+  "authors": [
+    {
+      "name": "Guido Schmitz",
+      "email": "schmitz@progressivedigital.de",
+      "homepage": "https://progressivedigital.de",
+      "role": "Developer"
+    }
+  ],
+  "homepage": "https://github.com/progressive-digital/cookies_addons",
+  "support": {
+    "issues": "https://github.com/progressive-digital/cookies_addons/issues",
+    "source": "https://github.com/progressive-digital/cookies_addons"
+  },
+  "minimum-stability": "dev",
+  "require": {}
+}

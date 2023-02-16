@@ -1,0 +1,113 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Cookies Addons Views module.
+ */
+
+/**
+ * Implements hook_views_pre_render().
+ */
+function cookies_addons_views_views_pre_render($view) {
+  $id = $view->storage->id();
+  $display_id = $view->current_display;
+  if (_cookies_addons_views_is_restricted($id, $display_id)) {
+    // Do not attach ajax settings to avoid issues
+    // with duplicated drupalSettings.
+    unset($view->element['#attached']['drupalSettings']['views']);
+  }
+  return $view;
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ */
+function cookies_addons_views_module_implements_alter(&$implementations, $hook) {
+  if ($hook === 'views_pre_render') {
+    // Execute cookies_addons_views_views_pre_render  at the end.
+    $implementation = $implementations['cookies_addons_views'];
+    unset($implementations['cookies_addons_views']);
+    $implementations['cookies_addons_views'] = $implementation;
+  }
+}
+
+/**
+ * Implements template_preprocess_views_view().
+ */
+function cookies_addons_views_preprocess_views_view(&$variables) {
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+
+  /** @var \Drupal\views\ViewExecutable $view */
+  $view = $variables['view'];
+
+  $id = $view->storage->id();
+  $display_id = $view->current_display;
+  $arguments = $view->args;
+
+  if ($service = _cookies_addons_views_is_restricted($id, $display_id)) {
+    $cookiesServices = $entityTypeManager
+      ->getStorage('cookies_service')
+      ->loadByProperties(['status' => 1]);
+    if(isset($cookiesServices[$service])) {
+      $serviceLabel = $cookiesServices[$service]->label();
+    }
+    else {
+      $serviceLabel = $service;
+    }
+    $variables = [];
+    $variables['view'] = $view;
+    // Replace entire view with a placeholder.
+    $variables['rows'] = [
+      '#type' => 'html_tag',
+      '#tag' => 'div',
+      '#attributes' => [
+        'class' => 'cookies-addons-views-placeholder',
+        'cookies-service' => $service,
+        'service-name' => $serviceLabel,
+        'view-id' => $id,
+        'display-id' => $display_id,
+        'data-args' => (is_array($arguments) && !empty($arguments)) ? implode('+', $arguments) : '',
+      ],
+      '#attached' => [
+        'library' => 'cookies_addons_views/cookies-addons-views',
+      ],
+    ];
+  }
+}
+
+/**
+ * Returns cookies service for restricted views.
+ *
+ * @param $view_id
+ *   View ID.
+ * @param $view_display_id
+ *   View display ID.
+ *
+ * @return false|string
+ *   Returns cookies service if applicable or FALSE.
+ */
+function _cookies_addons_views_is_restricted($view_id, $view_display_id) {
+  if (\Drupal::request()->getMethod() === 'POST') {
+    return FALSE;
+  }
+
+  $restricted_views = \Drupal::config('cookies_addons_views.settings')
+    ->get('views');
+
+  if ($restricted_views) {
+    $restricted_views = preg_split('/\r\n|\r|\n/', $restricted_views);
+
+    foreach ($restricted_views as $restricted_view) {
+      $parts = explode('|', $restricted_view);
+      if (count($parts) !== 3) {
+        continue;
+      }
+
+      if ($view_id === $parts[0] && $view_display_id === $parts[1]) {
+        return $parts[2];
+      }
+    }
+  }
+
+  return FALSE;
+}

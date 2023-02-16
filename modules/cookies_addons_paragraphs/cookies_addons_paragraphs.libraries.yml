@@ -1,0 +1,6 @@
+cookies-addons-paragraphs:
+  js:
+    js/cookies-addons-paragraphs.js: {}
+  dependencies:
+    - cookies/cookies.lib
+    - core/drupal.ajax

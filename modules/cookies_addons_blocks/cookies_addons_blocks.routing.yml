@@ -1,0 +1,16 @@
+cookies_addons_blocks.get_block:
+  path: '/cookies-addons-blocks/get-block/{block_id}/{service}'
+  defaults:
+    _title: 'Get block'
+    _controller: '\Drupal\cookies_addons_blocks\Controller\CookiesAddonsBlocksController::getBlock'
+  methods: [POST]
+  requirements:
+    _permission: 'access content'
+
+cookies_addons_blocks.settings:
+  path: '/admin/config/system/cookies-addons-blocks'
+  defaults:
+    _title: 'Cookies Blocks'
+    _form: 'Drupal\cookies_addons_blocks\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

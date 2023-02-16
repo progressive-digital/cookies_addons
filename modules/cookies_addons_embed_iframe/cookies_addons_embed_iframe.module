@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Cookies Addons embed iframe module.
+ */
+
+/**
+ * Expression to detect iframes apart from youtube.
+ */
+const IFRAME_EXPRESSION = '/^(?!(?:https?:)?(?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/\S*?[^\w\s-])((?!videoseries)[\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*).*$/im';
+
+/**
+ * @param string $src
+ *   The string from the src attribute.
+ *
+ * @return bool
+ *   TRUE if this is no youtube iframe.
+ */
+function _cookies_addons_embed_iframe_is_iframe(string $src) {
+  preg_match_all(
+    IFRAME_EXPRESSION,
+    htmlspecialchars_decode($src),
+    $matches
+  );
+
+  return isset($matches[0][0]);
+}

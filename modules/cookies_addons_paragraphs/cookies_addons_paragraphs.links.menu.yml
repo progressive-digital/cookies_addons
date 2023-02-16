@@ -1,0 +1,6 @@
+cookies_addons_paragraphs.settings:
+  title: 'Cookies Addons Paragraphs'
+  description: Configure Cookies Paragraphs
+  parent: cookies.config
+  route_name: cookies_addons_paragraphs.settings
+  weight: 10

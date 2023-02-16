@@ -1,0 +1,5 @@
+cookies_addons_paragraphs.settings:
+  route_name: cookies_addons_paragraphs.settings
+  base_route: cookies.config
+  title: 'Cookies Addons Paragraphs'
+  weight: 40

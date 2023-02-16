@@ -1,0 +1,7 @@
+name: Cookies Addons Embed Iframe
+type: module
+description: Provides integration with cookies module for the iframes embedded in text format.
+package: 'Cookies'
+core_version_requirement: ^9.2 || ^10
+dependencies:
+  - drupal:cookies

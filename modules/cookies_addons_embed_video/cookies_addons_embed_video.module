@@ -1,0 +1,28 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Cookies Addons embed video module.
+ */
+
+/**
+ * Expression to detect youtube videos.
+ */
+const YOUTUBE_EXPRESSION = '/(?:https?:)?(?:\/\/)?(?:[0-9A-Z-]+\.)?(?:youtu\.be\/|youtube(?:-nocookie)?\.com\/\S*?[^\w\s-])((?!videoseries)[\w-]{11})(?=[^\w-]|$)(?![?=&+%\w.-]*(?:[\'"][^<>]*>|<\/a>))[?=&+%\w.-]*/im';
+
+/**
+ * @param string $src
+ *   The string from the src attribute.
+ *
+ * @return bool
+ *   TRUE if this is a youtube url.
+ */
+function _cookies_addons_embed_video_is_youtube(string $src) {
+  preg_match_all(
+    YOUTUBE_EXPRESSION,
+    htmlspecialchars_decode($src),
+    $matches
+  );
+
+  return isset($matches[0][0]);
+}

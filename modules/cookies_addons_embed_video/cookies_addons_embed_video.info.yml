@@ -1,0 +1,7 @@
+name: Cookies Addons embed video
+type: module
+description: Provides integration with cookies_video module for the videos embed in text format.
+package: 'Cookies'
+core_version_requirement: ^9.2 || ^10
+dependencies:
+  - drupal:cookies_video

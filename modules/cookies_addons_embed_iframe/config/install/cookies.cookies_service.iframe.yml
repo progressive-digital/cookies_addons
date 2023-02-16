@@ -1,0 +1,14 @@
+langcode: en
+status: true
+dependencies:
+  enforced:
+    module:
+      - cookies_addons_embed_iframe
+id: iframe
+label: 'Iframes other than YouTube'
+group: iframes
+info:
+  format: 'full_html'
+  value: ''
+url: 'https://policies.google.com/privacy'
+consent: true

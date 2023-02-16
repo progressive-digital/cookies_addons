@@ -1,0 +1,7 @@
+cookies-addons-embed-iframe:
+  version: VERSION
+  js:
+    js/cookies-addons-embed-iframe.js: {}
+  dependencies:
+    - cookies/cookies.lib
+    - core/drupal.ajax

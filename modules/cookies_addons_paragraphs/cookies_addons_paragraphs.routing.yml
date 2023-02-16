@@ -1,0 +1,16 @@
+cookies_addons_paragraphs.get_paragraph:
+  path: '/cookies-addons-paragraphs/get-paragraph/{paragraph_id}/{service}'
+  defaults:
+    _title: 'Get paragraph'
+    _controller: '\Drupal\cookies_addons_paragraphs\Controller\CookiesAddonsParagraphsController::getParagraph'
+  methods: [POST]
+  requirements:
+    _permission: 'access content'
+
+cookies_addons_paragraphs.settings:
+  path: '/admin/config/system/cookies-addons-paragraphs'
+  defaults:
+    _title: 'Cookies Paragraphs'
+    _form: 'Drupal\cookies_addons_paragraphs\Form\SettingsForm'
+  requirements:
+    _permission: 'administer site configuration'

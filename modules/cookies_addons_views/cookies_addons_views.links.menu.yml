@@ -1,0 +1,6 @@
+cookies_addons_views.settings_form:
+  title: 'Cookies Addons Views'
+  description: Configure Cookies Addons Views.
+  parent: cookies.config
+  route_name: cookies_addons_views.settings_form
+  weight: 10

@@ -1,0 +1,6 @@
+cookies-addons-blocks:
+  js:
+    js/cookies-addons-blocks.js: {}
+  dependencies:
+    - cookies/cookies.lib
+    - core/drupal.ajax

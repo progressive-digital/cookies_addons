@@ -1,0 +1,98 @@
+<?php
+
+/**
+ * @file
+ * Primary module hooks for Cookies Addons Paragraphs module.
+ *
+ * @DCG
+ * This file is no longer required in Drupal 8.
+ * @see https://www.drupal.org/node/2217931
+ */
+
+use Drupal\paragraphs\Entity\Paragraph;
+
+/**
+ * Implements template_preprocess_paragraph().
+ */
+function cookies_addons_paragraphs_preprocess_paragraph(&$variables) {
+  /** @var \Drupal\paragraphs\Entity\Paragraph $paragraph */
+  $paragraph = $variables['paragraph'];
+  $entityTypeManager = \Drupal::service('entity_type.manager');
+
+  if ($paragraph instanceof Paragraph && $id = $paragraph->id()) {
+    if ($service = _cookies_addons_paragraphs_get_service($id)) {
+      $cookiesServices = $entityTypeManager
+        ->getStorage('cookies_service')
+        ->loadByProperties(['status' => 1]);
+      if(isset($cookiesServices[$service])) {
+        $serviceLabel = $cookiesServices[$service]->label();
+      }
+      else {
+        $serviceLabel = $service;
+      }
+      // Replace entire paragraph with a placeholder.
+      $variables['content'] = [
+        '#type' => 'html_tag',
+        '#tag' => 'div',
+        '#attributes' => [
+          'class' => 'cookies-addons-paragraph-placeholder',
+          'data-cookies-service' => $service,
+          'data-service-name' => $serviceLabel,
+          'data-paragraph-id' => $id,
+          'id' => $id . '-content',
+        ],
+        '#attached' => [
+          'library' => 'cookies_addons_paragraphs/cookies-addons-paragraphs',
+        ],
+      ];
+    }
+  }
+}
+
+/**
+ * Check if restrictions should be applied.
+ *
+ * @param $paragraph_id
+ *   Paragraph ID.
+ *
+ * @return false|string
+ *   Returns cookies service name if applicable or FALSE.
+ */
+function _cookies_addons_paragraphs_get_service($paragraph_id) {
+  if (\Drupal::request()->getMethod() === 'POST') {
+    return FALSE;
+  }
+
+  return _cookies_addons_paragraphs_is_restricted($paragraph_id);
+}
+
+/**
+ * Returns cookies service for restricted paragraphs.
+ *
+ * @param $paragraph_id
+ *   Paragraph ID.
+ *
+ * @return false|string
+ *   Returns cookies service name if applicable or FALSE.
+ */
+function _cookies_addons_paragraphs_is_restricted($paragraph_id) {
+  $restricted_paragraphs = \Drupal::config('cookies_addons_paragraphs.settings')
+    ->get('paragraphs');
+
+  if ($restricted_paragraphs) {
+    $restricted_paragraphs = preg_split('/\r\n|\r|\n/', $restricted_paragraphs);
+
+    foreach ($restricted_paragraphs as $restricted_paragraph) {
+      $parts = explode('|', $restricted_paragraph);
+      if (count($parts) !== 2) {
+        continue;
+      }
+
+      if ($paragraph_id === $parts[0]) {
+        return $parts[1];
+      }
+    }
+  }
+
+  return FALSE;
+}

@@ -1,0 +1,16 @@
+cookies_addons_views.get_view:
+  path: '/cookies-addons-views/get-view/{view_id}/{display_id}/{service}/{arguments}'
+  defaults:
+    _title: 'Get view'
+    _controller: '\Drupal\cookies_addons_views\Controller\CookiesAddonsViewsController::getView'
+  methods: [POST]
+  requirements:
+    _permission: 'access content'
+
+cookies_addons_views.settings_form:
+  path: '/admin/config/system/cookies-addons-views'
+  defaults:
+    _title: 'Cookies Addons Views settings'
+    _form: 'Drupal\cookies_addons_views\Form\SettingsForm'
+  requirements:
+    _permission: 'administer cookies_addons_views configuration'
