@@ -11,8 +11,8 @@ use Drupal\filter\FilterProcessResult;
  *
  * @Filter(
  * id = "cookies_addons_embed_iframe_filter",
- * title = @Translation("Cookie restrict embedded iframes."),
- * description = @Translation("Cookie restrict embedded iframes."),
+ * title = @Translation("Block iframes"),
+ * description = @Translation("To prevent loading of external resources and cookies from iframes."),
  * type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
  * )
  */

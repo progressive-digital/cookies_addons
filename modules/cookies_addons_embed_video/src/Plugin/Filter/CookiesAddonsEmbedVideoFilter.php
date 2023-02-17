@@ -11,8 +11,8 @@ use Drupal\filter\FilterProcessResult;
  *
  * @Filter(
  * id = "cookies_addons_embed_viedeo_filter",
- * title = @Translation("YouTube embed videos to be cookies restricted"),
- * description = @Translation("YouTube embed videos to be cookies restricted"),
+ * title = @Translation("Block YouTube videos"),
+ * description = @Translation("Blocks YouTube videos to prevent loading of external resources and cookies."),
  * type = Drupal\filter\Plugin\FilterInterface::TYPE_TRANSFORM_IRREVERSIBLE,
  * )
  */
