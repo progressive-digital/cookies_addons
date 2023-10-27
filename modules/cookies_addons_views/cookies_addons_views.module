@@ -66,7 +66,7 @@ function cookies_addons_views_preprocess_views_view(&$variables) {
         'service-name' => $serviceLabel,
         'view-id' => $id,
         'display-id' => $display_id,
-        'data-args' => (is_array($arguments) && !empty($arguments)) ? implode('+', $arguments) : '',
+        'data-args' => (is_array($arguments) && !empty($arguments)) ? implode('+', $arguments) : NULL,
       ],
       '#attached' => [
         'library' => 'cookies_addons_views/cookies-addons-views',
